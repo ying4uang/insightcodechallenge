@@ -116,6 +116,9 @@ Expected output:
 
 ```
 
+### Running your own tests
+
+Enter your test data under venmo_input folder(directly under the proejct). Run _run.sh_ and check the output.txt under venmo_output.
 
 ## Authors
 
