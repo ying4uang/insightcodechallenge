@@ -16,10 +16,10 @@ This project is compiled with Python 2.7.6.
 Additional packages include numpy(1.8.0rc1) and networkx(1.11)
 
 #### Installation
-* _numpy_ installation
+* _numpy_ installation:
 pip install numpy
 
-* _networkx_ installation  
+* _networkx_ installation:    
 sudo pip install networkx
 
 ### Running the tests
