@@ -1,10 +1,12 @@
 # Insight Code Challenge - Streaming Venmo Transaction
 
-This project is created to answer the Insight Data Engineering Code Challenge.
-It processes venmo transaction files line by line and updates a multi-edge graph and calculates the streaming median.
+This project is created for Insight Data Engineering Code Challenge.
+It processes venmo transaction files line by line and updates a single-edge graph and calculates the streaming median.
 
 ### Assumptions:
 * This project considers 60s exclusive.
+
+* User names are NOT case-sensitive.
 
 * If multiple transactions occurred between the same two users, we update the edge with the latest valid time within the window.
 
@@ -23,7 +25,7 @@ sudo pip install networkx
 
 All tests are located under insight_testsuite.
 
-Run _insight_testsuite/run_tests.sh_ to execute all test cases. Test results are output to each venmo_output folder accordingly.
+Run _insight_testsuite/run_tests.sh_ to execute all test cases. Test results are output to console. Program results are output to each venmo_output folder accordingly.
 
 **test-1-venmo-trans**
 
@@ -42,7 +44,7 @@ To test out if there are transactions between the same two users that occurred w
 
 ```
 {"created_time": "2016-03-28T23:23:13Z", "target": "Tyrion-Lannister", "actor": "Jon-Snow"}
-{"created_time": "2016-03-28T23:24:13Z", "target": "Tyrion-Lannister", "actor": "Jon-Snow"}
+{"created_time": "2016-03-28T23:23:14Z", "target": "Tyrion-Lannister", "actor": "Jon-Snow"}
 
 ```
 Expected output:
@@ -53,7 +55,7 @@ Expected output:
 
 **test-3-venmo-trans**
 
-Records that has 2 transactions between 2 same users and spread outside of 60s window.
+Records that has multiple transactions between 2 same users and spread outside of 60s window.
 
 ```
 {"created_time": "2016-03-28T23:23:12Z", "target": "Tyrion-Lannister", "actor": "Little-Finger"}
