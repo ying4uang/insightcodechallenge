@@ -15,7 +15,7 @@ def median(l):
 
 
 # loop through edges graph to remove edges/nodes earlier than threshold time
-def remove_edges(Grph, threshold):
+def update_graph(Grph, threshold):
     edges_to_remove = []
     nodes_to_check = []
 
@@ -92,7 +92,7 @@ with open(inputfile, 'rb') as f:
             current_max_time = record['time']
             threshold_time = current_max_time - timedelta(seconds=60)
 
-            remove_edges(G, threshold_time)
+            update_graph(G, threshold_time)
             G.add_edge(record['actor'], record['target'], time=record['time'])
 
 
