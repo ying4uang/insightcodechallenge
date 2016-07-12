@@ -4,9 +4,9 @@ This project is created to answer the Insight Data Engineering Code Challenge.
 It processes venmo transaction files line by line and updates a multi-edge graph and calculates the streaming median.
 
 ### Assumptions:
-* This projects considers the 60s inclusive.
-For instance, if one transacation occurred at 10h40m10s and another one at 10h41m10s we consider these two transactions within the 60s window.
-* This project assumes that multiple transactions can happen between same people within the 60s window.
+* This project considers 60s exclusive.
+
+* If multiple transactions occurred between the same two users, we update the edge with the latest valid time within the window.
 
 ### Packages and Versions
 
@@ -23,7 +23,7 @@ sudo pip install networkx
 
 All tests are located under insight_testsuite.
 
-Run _run_tests.sh_ to execute all test cases. Test outputs are under venmo_output folder under each test folder.
+Run _insight_testsuite/run_tests.sh_ to execute all test cases. Test results are output to each venmo_output folder accordingly.
 
 **test-1-venmo-trans**
 
@@ -38,7 +38,7 @@ Expected output:
 
 **test-2-venmo-trans**
 
-To test out if there are transactions between the same people that occurred within one minute.
+To test out if there are transactions between the same two users that occurred within one minute.
 
 ```
 {"created_time": "2016-03-28T23:23:13Z", "target": "Tyrion-Lannister", "actor": "Jon-Snow"}
@@ -48,12 +48,12 @@ To test out if there are transactions between the same people that occurred with
 Expected output:
 ```
 1.00
-2.00
+1.00
 ```
 
 **test-3-venmo-trans**
 
-Records that has 2 transactions between same people and spread outside of 60s window. This is to make sure we are not removing evicting the valid transcations occurred within 60s window.
+Records that has 2 transactions between 2 same users and spread outside of 60s window.
 
 ```
 {"created_time": "2016-03-28T23:23:12Z", "target": "Tyrion-Lannister", "actor": "Little-Finger"}
@@ -70,7 +70,7 @@ Expected output:
 1.00
 1.00
 2.00
-2.50
+2.00
 2.00
 
 ```
@@ -92,47 +92,26 @@ Expected output:
 
 ```
 
+**test-5-venmo-trans**
 
-
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Stay what the step will be
+To rule out lines with incorrect time format.
 
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+{"created_time": "2016-03-28T23:23:12Za", "target": "Tyrion-Lannister", "actor": "Little-Finger"}
+{"created_time": "2016-03-28T23:23:12Z", "target": "Little-Finger", "actor": "Tyrion-Lannister"}
+{"created_time": "2016-03-28T23:24:11Z", "target": "Tyrion-Lannister", "actor": "Little-Finger"}
+{"created_time": "2016-03-28T23:24:12Z", "target": "Tyrion-Lannister", "actor": "Cersei-Lannister"}
+{"created_time": "2016-03-28T23:24:13Z", "target": "Little-Finger", "actor": "Cersei-Lannister"}
 
 ```
-Give an example
+Expected output:
 ```
-
-### And coding style tests
-
-Explain what these tests test and why
+1.00
+1.00
+1.00
+2.00
 
 ```
-Give an example
-```
-
 
 
 ## Authors
